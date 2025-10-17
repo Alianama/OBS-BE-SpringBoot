@@ -7,11 +7,15 @@ import org.springframework.data.domain.Pageable;
 
 public interface ItemService {
   List<Item> getAllItems();
-Item getItemById(Long id);
-Item createItem(Item item);
-Item updateItem(Long id, Item updatedItem);
-boolean deleteItem(Long id);
 
- Page<Item> getItemsWithPagination(Pageable pageable);
+  Item getItemById(Long id);
+
+  Item createItem(Item item);
+
+  Item updateItem(Long id, Item updatedItem);
+
+  boolean deleteItem(Long id);
+
+  Page<Item> getItemsWithPagination(Pageable pageable);
 
 }

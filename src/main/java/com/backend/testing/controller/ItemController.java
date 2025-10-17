@@ -23,8 +23,7 @@ public class ItemController {
     @GetMapping
     public ResponseEntity<Page<Item>> getAll(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size
-    ) {
+            @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Item> itemsPage = itemService.getItemsWithPagination(pageable);
         return ResponseEntity.ok(itemsPage);

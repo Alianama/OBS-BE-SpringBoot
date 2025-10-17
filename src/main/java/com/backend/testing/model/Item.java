@@ -9,10 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "items")
 public class Item {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  private String name;
-  private Float price;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private Float price;
 }
