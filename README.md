@@ -81,4 +81,4 @@ GET /api/orders?page=0&size=10
 ## Postman Collection
 
 Download & import:  
-[Postman Collection Example](https://.postman.co/workspace/My-Workspace~f2d11fd1-fa7e-4b47-8772-09a2fc7bef54/collection/30656608-e8db712c-5e2e-4aec-a5ba-d8ccbc75da7d?action=share&creator=30656608)
+[Postman Collection Example](https://postman.co/workspace/My-Workspace~f2d11fd1-fa7e-4b47-8772-09a2fc7bef54/collection/30656608-e8db712c-5e2e-4aec-a5ba-d8ccbc75da7d?action=share&creator=30656608)
