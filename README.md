@@ -78,9 +78,6 @@ GET /api/orders?page=0&size=10
 }
 ```
 
-### Inventory API (tambahkan sesuai kebutuhan)
-// Endpoint dan contoh request/response untuk inventory bisa ditambahkan jika diperlukan
-
 ## Postman Collection
 
 Download & import:  
