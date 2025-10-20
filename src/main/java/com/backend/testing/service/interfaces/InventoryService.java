@@ -1,21 +1,22 @@
 package com.backend.testing.service.interfaces;
 
+import com.backend.testing.dto.InventoryRequest;
 import com.backend.testing.model.Inventory;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import java.util.List;
 
 public interface InventoryService {
-    List<Inventory> getAllStocks();
 
-    Inventory getStockById(Long id);
+    List<Inventory> getAllInventories();
 
-    Inventory createStock(Inventory stock);
+    Inventory getInventoryById(Long id);
 
-    Inventory updateStock(Long id, Inventory updatedStock);
+    Inventory createInventory(InventoryRequest request);
 
-    boolean deleteStock(Long id);
+    Inventory updateInventory(Long id, InventoryRequest request);
 
-    Page<Inventory> getStocksWithPagination(Pageable pageable);
+    boolean deleteInventory(Long id);
 
+    Page<Inventory> getInventoriesWithPagination(Pageable pageable);
 }

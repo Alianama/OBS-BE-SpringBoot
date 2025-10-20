@@ -8,26 +8,19 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "inventories")
-public class Inventory {
+@Table(name = "orders")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "order_no")
+    private Long orderNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private Item item;
-
     private Integer qty;
+    private Float price;
 
-    public enum Type {
-        W,
-        T
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, length = 1)
-    private Type type;
 }

@@ -1,7 +1,11 @@
 package com.backend.testing.service.impl;
 
+import com.backend.testing.dto.InventoryRequest;
+import com.backend.testing.exception.ResourceNotFoundException;
 import com.backend.testing.model.Inventory;
+import com.backend.testing.model.Item;
 import com.backend.testing.repository.InventoryRepository;
+import com.backend.testing.repository.ItemRepository;
 import com.backend.testing.service.interfaces.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
@@ -17,48 +20,57 @@ public class InventoryServiceImpl implements InventoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
     @Override
-    public List<Inventory> getAllStocks() {
+    public List<Inventory> getAllInventories() {
         return inventoryRepository.findAll();
     }
 
     @Override
-    public Inventory getStockById(Long id) {
-        Optional<Inventory> stock = inventoryRepository.findById(id);
-        return stock.orElse(null);
+    public Page<Inventory> getInventoriesWithPagination(Pageable pageable) {
+        return inventoryRepository.findAll(pageable);
     }
 
     @Override
-    public Inventory createStock(Inventory stock) {
-        return inventoryRepository.save(stock);
+    public Inventory getInventoryById(Long id) {
+        return inventoryRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Inventory updateStock(Long id, Inventory updatedStock) {
-        Optional<Inventory> existingStock = inventoryRepository.findById(id);
+    public Inventory createInventory(InventoryRequest request) {
+        Inventory inventory = new Inventory();
+        Item item = itemRepository.findById(request.getItemId())
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found"));
+        inventory.setItem(item);
+        inventory.setQty(request.getQty());
+        inventory.setType(Inventory.Type.valueOf(request.getType()));
 
-        if (existingStock.isPresent()) {
-            Inventory stock = existingStock.get();
-            stock.setItem_Id(updatedStock.getItem_Id());
-            stock.setQty(updatedStock.getQty());
-            stock.setInventory_type(updatedStock.getInventory_type());
-            return inventoryRepository.save(stock);
-        } else {
-            return null;
-        }
+        return inventoryRepository.save(inventory);
     }
 
     @Override
-    public boolean deleteStock(Long id) {
+    public Inventory updateInventory(Long id, InventoryRequest request) {
+        Inventory existing = inventoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inventory not found"));
+
+        Item item = itemRepository.findById(request.getItemId())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        existing.setItem(item);
+        existing.setQty(request.getQty());
+        existing.setType(Inventory.Type.valueOf(request.getType()));
+
+        return inventoryRepository.save(existing);
+    }
+
+    @Override
+    public boolean deleteInventory(Long id) {
         if (inventoryRepository.existsById(id)) {
             inventoryRepository.deleteById(id);
             return true;
         }
         return false;
-    }
-
-    @Override
-    public Page<Inventory> getStocksWithPagination(Pageable pageable) {
-        return inventoryRepository.findAll(pageable);
     }
 }
